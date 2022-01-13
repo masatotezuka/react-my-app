@@ -7,13 +7,6 @@ const App = () => {
     { name: "yamada" },
   ];
 
-  // return (
-  //   <div>
-  //     {profiles.map((profile, index) => {
-  //       return <User name={profile.name} age={profile.age} key={index} />;
-  //     })}
-  //   </div>
-  // );
   return (
     <div>
       {profiles.map((profile, index) => {
