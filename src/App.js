@@ -1,35 +1,47 @@
 import React from "react";
 
-// class App extends Component {
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <h1>Hello!</h1>
-//         <label htmlFor="bar">bar</label>
-//         <input
-//           type="text"
-//           onChange={() => {
-//             console.log("click!");
-//           }}
-//         ></input>
-//       </React.Fragment>
-//     );
-//   }
-// }
-
 const App = () => {
+  const profiles = [
+    { name: "taro", age: 10 },
+    { name: "hanako", age: 23 },
+    { name: "yamada" },
+  ];
+
+  // return (
+  //   <div>
+  //     {profiles.map((profile, index) => {
+  //       return <User name={profile.name} age={profile.age} key={index} />;
+  //     })}
+  //   </div>
+  // );
   return (
     <div>
-      <Cat />
-      <Cat />
-      <Cat />
-      <Cat />
+      {profiles.map((profile, index) => {
+        return <User name={profile.name} age={profile.age} key={index} />;
+      })}
     </div>
   );
 };
 
-const Cat = () => {
-  return <div>Meow!</div>;
+const User = (props) => {
+  return (
+    <div>
+      Hi, I am {props.name}, and {props.age} years old!
+    </div>
+  );
+};
+
+User.defaultProps = {
+  age: 1,
 };
 
 export default App;
+
+var items = [1, 2, 3, 4, 5];
+
+//mapは配列を返す
+var result = items.map(function (value) {
+  return value * 2;
+});
+
+console.log(result);
