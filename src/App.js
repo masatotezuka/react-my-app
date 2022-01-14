@@ -1,19 +1,18 @@
 import React from "react";
 
-const App = () => <Counter></Counter>;
+const App = () => <Counter number={1} />;
 
 class Counter extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.state);
     this.state = { count: 0 };
   }
   handlePlusButton = () => {
-    // console.log(this.state.conut++);
-    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + this.props.number });
+    console.log(this.state.conut);
   };
   handleMinusButton = () => {
-    this.setState({ count: this.state.count - 1 });
+    this.setState({ count: this.state.count - this.props.number });
   };
 
   render() {
