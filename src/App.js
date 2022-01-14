@@ -1,5 +1,7 @@
 import React from "react";
 
+
+//親コンポーネント
 const App = () => {
   const profiles = [
     { name: "taro", age: 10 },
@@ -16,6 +18,7 @@ const App = () => {
   );
 };
 
+//子コンポーネント
 const User = (props) => {
   return (
     <div>
