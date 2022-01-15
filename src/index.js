@@ -28,6 +28,7 @@ class Toggle extends React.Component {
     this.state = { isToggleOn: true };
     this.handleClick = this.handleClick.bind(this);
   }
+
   handleClick() {
     this.setState((prevState) => ({
       isToggleOn: !prevState.isToggleOn,
@@ -43,14 +44,6 @@ class Toggle extends React.Component {
   }
 }
 
-function test() {
-  console.log(this);
-}
-var obj = {};
-obj.test = test;
-
-obj.test();
-
 const foo = {
   name: "FOO object",
   age: "ddd",
@@ -60,7 +53,28 @@ const foo = {
 };
 
 foo.dump();
-// ========================================
 
+function UserGreeeting(props) {
+  return <h1>Welcome {props.name}.</h1>;
+}
+
+function GuestGreeeting(props) {
+  return <h1>Welcome guest.</h1>;
+}
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoginIn;
+  if (isLoggedIn) {
+    return <UserGreeeting name={"yamada"} />;
+  } else {
+    return <GuestGreeeting />;
+  }
+}
+
+// ========================================
 ReactDOM.render(<Form />, document.getElementById("root2"));
 ReactDOM.render(<Toggle />, document.getElementById("root3"));
+ReactDOM.render(
+  <Greeting isLoginIn={true} />,
+  document.getElementById("root4")
+);
