@@ -2,27 +2,38 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-const todos = [
-  { id: 1, todoName: "タスク1", date: "2021-01-16" },
-  { id: 2, todoName: "タスク2", date: "2021-01-15" },
-  { id: 3, todoName: "タスク3", date: "2021-01-13" },
-];
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-function ListItems(props) {
-  const todo = props.todo;
-  return (
-    <li>
-      {todo.id}: {todo.todoName} 期限 {todo.date}
-    </li>
-  );
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event) {
+    alert("An essay was submitted: " + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
 }
 
-function TodoLists(props) {
-  const todos = props.todos;
-  const todoLists = todos.map((todo) => (
-    <ListItems todo={todo} key={todo.id} />
-  ));
-  return <ul>{todoLists}</ul>;
-}
-
-ReactDOM.render(<TodoLists todos={todos} />, document.getElementById("root1"));
+ReactDOM.render(<NameForm />, document.getElementById("root1"));
