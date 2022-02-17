@@ -1,120 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import { useState, useMemo } from "react";
 
-function BoilingVerdict(props) {
-  if (props.celsius >= 100) {
-    return <p>The water would boil</p>;
-  }
-  return <p>The water would not boil</p>;
-}
-
-class Caculator extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = { temperature: "" };
-  }
-
-  handleChange(e) {
-    this.setState({ temperature: e.target.value });
-  }
-  render() {
-    const temperature = this.state.temperature;
-    return (
-      <fieldset>
-        <legend>Enter temperature in Celsius:</legend>
-        <input value={temperature} onChange={this.handleChange} />
-        <BoilingVerdict celsius={parseFloat(temperature)} />
-      </fieldset>
-    );
-  }
-}
-
-function toCelsius(fahrenherit) {
-  return ((fahrenherit - 32) * 5) / 9;
-}
-
-function toFahrenheit(celsius) {
-  return (celsius * 9) / 5 + 32;
-}
-
-function tryConvert(temperature, convert) {
-  const input = parseFloat(temperature);
-  if (Number.isNaN(input)) {
-    return "";
-  }
-  const output = convert(input);
-  const rounded = Math.round(output * 1000) / 1000;
-  return rounded.toString();
-}
-
-const scaleNames = {
-  c: "Celsius",
-  f: "Fahrenheit",
+const square = (params) => {
+  const testData = [...Array(1000).keys()];
+  console.log(testData);
+  testData.forEach(() => {
+    console.log(`計算結果Bを処理中。${testData.length}回ループ`);
+  });
+  return params * params;
 };
 
-class TemperatureInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-  handleChange(e) {
-    this.props.onTempertureChange(e.target.value);
-  }
-  render() {
-    const temperature = this.props.temperature;
-    const scale = this.props.scale;
-    return (
-      <fieldset>
-        <legend>Enter temperature in {scaleNames[scale]}:</legend>
-        <input value={temperature} onChange={this.handleChange}></input>
-      </fieldset>
-    );
-  }
-}
+const Counter = () => {
+  const [countSateA, setCountA] = useState(0);
+  const [countSateB, setCountB] = useState(0);
 
-class Caculator2 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
-    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
-    this.state = { temperature: "", scale: "c" };
-  }
+  const countResultA = () => {
+    setCountA((preNumber) => preNumber + 1);
+    console.log("計算結果Aを実行");
+  };
+  const countResultB = () => {
+    setCountB((preNumber) => preNumber + 1);
+    console.log("計算結果Bを実行");
+  };
+  // const squareArea = useMemo(() => square(countSateB), [countSateB]);
 
-  handleCelsiusChange(temperature) {
-    this.setState({ scale: "c", temperature });
-  }
+  const squareArea = square(countSateB);
+  return (
+    <>
+      <p>計算結果A：　{countSateA} </p>
+      <button onClick={countResultA}>計算：A＋１</button>
+      <p>計算結果B：　{countSateB} </p>
+      <button onClick={countResultB}>計算：B＋１</button>
+      <p>正方形の面積</p>
+      <p>計算結果B×計算結果B ={squareArea}</p>
+    </>
+  );
+};
 
-  handleFahrenheitChange(temperature) {
-    this.setState({ scale: "f", temperature });
-  }
-
-  render() {
-    const scale = this.state.scale;
-    const temperature = this.state.temperature;
-    const celisius =
-      scale === "f" ? tryConvert(temperature, toCelsius) : temperature;
-    const fahrenherit =
-      scale === "c" ? tryConvert(temperature, toFahrenheit) : temperature;
-
-    return (
-      <React.Fragment>
-        <TemperatureInput
-          scale="c"
-          temperature={celisius}
-          onTempertureChange={this.handleCelsiusChange}
-        />
-        <TemperatureInput
-          scale="f"
-          temperature={fahrenherit}
-          onTempertureChange={this.handleFahrenheitChange}
-        />
-        <BoilingVerdict celisius={parseFloat(celisius)} />
-      </React.Fragment>
-    );
-  }
-}
-
-ReactDOM.render(<Caculator />, document.getElementById("root1"));
-ReactDOM.render(<Caculator2 />, document.getElementById("root2"));
+ReactDOM.render(<Counter />, document.getElementById("root1"));
