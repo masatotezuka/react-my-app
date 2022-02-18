@@ -1,40 +1,56 @@
-import React from "react";
+import React, { useCallback } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
-const square = (params) => {
-  const testData = [...Array(1000).keys()];
-  console.log(testData);
-  testData.forEach(() => {
-    console.log(`計算結果Bを処理中。${testData.length}回ループ`);
-  });
-  return params * params;
-};
-
-const Counter = () => {
-  const [countSateA, setCountA] = useState(0);
-  const [countSateB, setCountB] = useState(0);
-
-  const countResultA = () => {
-    setCountA((preNumber) => preNumber + 1);
-    console.log("計算結果Aを実行");
-  };
-  const countResultB = () => {
-    setCountB((preNumber) => preNumber + 1);
-    console.log("計算結果Bを実行");
-  };
-  // const squareArea = useMemo(() => square(countSateB), [countSateB]);
-
-  const squareArea = square(countSateB);
+const Button = React.memo(({ value, countState, state }) => {
+  console.log(`${value}が押されました`);
   return (
     <>
-      <p>計算結果A：　{countSateA} </p>
-      <button onClick={countResultA}>計算：A＋１</button>
-      <p>計算結果B：　{countSateB} </p>
-      <button onClick={countResultB}>計算：B＋１</button>
-      <p>正方形の面積</p>
-      <p>計算結果B×計算結果B ={squareArea}</p>
+      <p>
+        {value}:{state}
+      </p>
+      <button onClick={countState}> {value}</button>
+    </>
+  );
+});
+
+// const Button = ({ value, countState, state }) => {
+//   console.log(`${value}が押されました`);
+//   return (
+//     <>
+//       <p>
+//         {value}:{state}
+//       </p>
+//       <button onClick={countState}> {value}</button>
+//     </>
+//   );
+// };
+
+const Counter = () => {
+  const [countStateA, setCountA] = useState(0);
+  const [countStateB, setCountB] = useState(0);
+
+  const countResultA = useCallback(() => {
+    setCountA(countStateA + 1);
+    console.log("計算結果Aを実行");
+  }, [countStateA]);
+  const countResultB = useCallback(() => {
+    setCountB(countStateB + 1);
+    console.log("計算結果Bを実行");
+  }, [countStateB]);
+  return (
+    <>
+      <Button
+        countState={countResultA}
+        value="Aボタン"
+        state={countStateA}
+      ></Button>
+      <Button
+        countState={countResultB}
+        value="Bボタン"
+        state={countStateB}
+      ></Button>
     </>
   );
 };
