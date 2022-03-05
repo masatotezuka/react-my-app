@@ -3,19 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { useState } from "react";
 
-const Button = React.memo(({ value, countState, state }) => {
-  console.log(`${value}が押されました`);
-  return (
-    <>
-      <p>
-        {value}:{state}
-      </p>
-      <button onClick={countState}> {value}</button>
-    </>
-  );
-});
-
-// const Button = ({ value, countState, state }) => {
+// const Button = React.memo(({ value, countState, state }) => {
 //   console.log(`${value}が押されました`);
 //   return (
 //     <>
@@ -25,7 +13,19 @@ const Button = React.memo(({ value, countState, state }) => {
 //       <button onClick={countState}> {value}</button>
 //     </>
 //   );
-// };
+// });
+
+const Button = ({ value, countState, state }) => {
+  console.log(`${value}が押されました`);
+  return (
+    <>
+      <p>
+        {value}:{state}
+      </p>
+      <button onClick={countState}> {value}</button>
+    </>
+  );
+};
 
 const Counter = () => {
   const [countStateA, setCountA] = useState(0);
